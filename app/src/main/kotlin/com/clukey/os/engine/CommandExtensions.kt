@@ -153,7 +153,7 @@ object CommandExtensions {
         }
         if (tl.contains("intruder log") || tl.contains("show intruders")) {
             val log = AppLockManager.getIntruderLog()
-            return if (log.isEmpty()) "No intruder attempts recorded."
+            return if (log.isEmpty()) "No intruder attempts recorded." to "intruder_log"
             else "Last intruder attempt: ${log.last().getString("time")}" to "intruder_log"
         }
 

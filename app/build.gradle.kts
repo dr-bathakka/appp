@@ -61,6 +61,9 @@ dependencies {
     // NanoHTTPD — local HTTP server for phone bridge
     implementation("org.nanohttpd:nanohttpd:2.3.1")
 
+    // Location (Google Play Services)
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+
     // JSON
     implementation("com.google.code.gson:gson:2.10.1")
 }

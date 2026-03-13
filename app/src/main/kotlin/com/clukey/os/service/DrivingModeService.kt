@@ -163,7 +163,7 @@ class DrivingModeService : Service(), LocationListener {
 
     private fun startMessagePolling() {
         scope.launch {
-            while (isActive(coroutineContext)) {
+            while (isActive) {
                 delay(3000)
                 if (!isActive) continue
                 checkNewMessages()
