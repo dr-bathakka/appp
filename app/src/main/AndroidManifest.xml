@@ -63,6 +63,16 @@
             android:exported="false"
             android:theme="@style/Theme.CluKey" />
 
+        <!-- Settings -->
+        <activity android:name=".ui.SettingsActivity"
+            android:exported="false" android:theme="@style/Theme.CluKey" />
+        <!-- App Usage / Screen Time -->
+        <activity android:name=".ui.AppUsageActivity"
+            android:exported="false" android:theme="@style/Theme.CluKey" />
+        <!-- Panic Mode -->
+        <activity android:name=".ui.PanicActivity"
+            android:exported="false" android:theme="@style/Theme.CluKey" />
+
         <!-- Share Activity (phone ↔ PC ↔ server) -->
         <activity
             android:name=".ui.ShareActivity"

@@ -158,6 +158,62 @@ class MainActivity : AppCompatActivity() {
         }
         root.addView(btnStart)
 
+        // Navigation grid - all screens
+        root.addView(TextView(ctx).apply {
+            text = "SCREENS"
+            textSize = 10f
+            setTypeface(null, android.graphics.Typeface.BOLD)
+            setTextColor(0xFF4FC3F7.toInt())
+            letterSpacing = 0.3f
+            setPadding(0, dp(16), 0, dp(8))
+        })
+
+        val navGrid = android.widget.GridLayout(ctx).apply {
+            columnCount = 2
+            rowCount = 3
+            useDefaultMargins = true
+        }
+
+        fun navBtn(icon: String, label: String, color: Int, action: () -> Unit): LinearLayout {
+            return LinearLayout(ctx).apply {
+                orientation = LinearLayout.VERTICAL
+                gravity = android.view.Gravity.CENTER
+                setBackgroundColor(0xFF111827.toInt())
+                setPadding(dp(8), dp(14), dp(8), dp(14))
+                val p = android.widget.GridLayout.LayoutParams().apply {
+                    width = 0; columnSpec = android.widget.GridLayout.spec(
+                        android.widget.GridLayout.UNDEFINED, 1f)
+                    setMargins(dp(3), dp(3), dp(3), dp(3))
+                }
+                layoutParams = p
+                addView(TextView(ctx).apply {
+                    text = icon; textSize = 24f
+                    gravity = android.view.Gravity.CENTER
+                })
+                addView(TextView(ctx).apply {
+                    text = label; textSize = 10f
+                    setTypeface(null, android.graphics.Typeface.BOLD)
+                    setTextColor(color); gravity = android.view.Gravity.CENTER
+                    letterSpacing = 0.1f; setPadding(0, dp(4), 0, 0)
+                })
+                setOnClickListener { action() }
+            }
+        }
+
+        navGrid.addView(navBtn("⇄", "SHARE", 0xFF4FC3F7.toInt()) {
+            startActivity(android.content.Intent(ctx, ShareActivity::class.java))
+        })
+        navGrid.addView(navBtn("⚙️", "SETTINGS", 0xFF94A3B8.toInt()) {
+            startActivity(android.content.Intent(ctx, SettingsActivity::class.java))
+        })
+        navGrid.addView(navBtn("📊", "SCREEN TIME", 0xFF4ADE80.toInt()) {
+            startActivity(android.content.Intent(ctx, AppUsageActivity::class.java))
+        })
+        navGrid.addView(navBtn("🚨", "PANIC", 0xFFF87171.toInt()) {
+            startActivity(android.content.Intent(ctx, PanicActivity::class.java))
+        })
+        root.addView(navGrid)
+
         // Share button
         root.addView(Button(ctx).apply {
             text = "⇄  SHARE  —  PHONE ↔ PC"
