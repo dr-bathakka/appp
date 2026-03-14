@@ -12,20 +12,7 @@ import androidx.core.app.NotificationCompat
 import com.clukey.os.utils.AppLogger
 import com.clukey.os.utils.PrefsManager
 import kotlinx.coroutines.*
-import org.json.JSONArray
 
-/**
- * FocusModeService — blocks distracting apps and enforces usage limits.
- *
- * Features:
- *  ✅ Block list: Instagram, TikTok, YouTube, Twitter, etc.
- *  ✅ App usage budgets: "Max 1 hour of TikTok per day"
- *  ✅ Focus sessions: study/work/sleep with custom blocked lists
- *  ✅ Break reminders: "Take a 5-min break after 45 min of focus"
- *  ✅ Usage stats alerts: "You've used TikTok 3 hours today"
- *
- * Integrates with AppLockService to redirect locked apps.
- */
 object FocusModeManager {
 
     private const val PREFS = "clukey_focus"
@@ -34,8 +21,6 @@ object FocusModeManager {
     fun init(ctx: Context) {
         prefs = ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
     }
-
-    // ── Sessions ──────────────────────────────────────────────────────────────
 
     var activeFocusMode: String
         get() = prefs?.getString("focus_mode", "off") ?: "off"
@@ -64,8 +49,6 @@ object FocusModeManager {
                getCustomBlockedApps().contains(packageName)
     }
 
-    // ── Custom blocked apps ───────────────────────────────────────────────────
-
     fun getCustomBlockedApps(): Set<String> {
         return prefs?.getStringSet("custom_blocked", emptySet()) ?: emptySet()
     }
@@ -81,8 +64,6 @@ object FocusModeManager {
         set.remove(pkg)
         prefs?.edit()?.putStringSet("custom_blocked", set)?.apply()
     }
-
-    // ── App Usage Budgets ─────────────────────────────────────────────────────
 
     fun setAppBudgetMinutes(packageName: String, minutes: Int) {
         prefs?.edit()?.putInt("budget_$packageName", minutes)?.apply()
@@ -107,17 +88,15 @@ object FocusModeManager {
         return getAppUsageTodayMinutes(packageName) >= budget
     }
 
-    // ── Focus Mode Control ────────────────────────────────────────────────────
-
     fun startFocusMode(mode: String): String {
         activeFocusMode = mode
         focusStartTime = System.currentTimeMillis()
         return when (mode) {
             "study" -> "📚 Study mode ON. Blocking distracting apps."
-            "work" -> "💼 Work mode ON. Stay productive!"
+            "work"  -> "💼 Work mode ON. Stay productive!"
             "sleep" -> "😴 Sleep mode ON. Put the phone down!"
-            "off" -> { activeFocusMode = "off"; "✅ Focus mode disabled." }
-            else -> "Unknown mode: $mode"
+            "off"   -> { activeFocusMode = "off"; "✅ Focus mode disabled." }
+            else    -> "Unknown mode: $mode"
         }
     }
 
@@ -132,6 +111,9 @@ object FocusModeManager {
         val blockedCount = (FOCUS_MODES[activeFocusMode]?.size ?: 0) + getCustomBlockedApps().size
         return "📵 ${activeFocusMode.uppercase()} MODE — ${mins}min active. $blockedCount apps blocked."
     }
+
+    fun isActive(): Boolean = activeFocusMode != "off"
+    fun getMode(): String = activeFocusMode
 }
 
 class FocusModeService : Service() {
@@ -154,7 +136,6 @@ class FocusModeService : Service() {
         FocusModeManager.startFocusMode(mode)
         startForeground(NOTIF_ID, buildNotification(mode))
 
-        // Usage tracking loop - every minute, update usage stats
         scope.launch {
             while (isActive) {
                 delay(60_000)
@@ -167,14 +148,15 @@ class FocusModeService : Service() {
     private fun checkBudgetAlerts() {
         val budgetApps = listOf(
             "com.zhiliaoapp.musically" to "TikTok",
-            "com.instagram.android" to "Instagram",
+            "com.instagram.android"    to "Instagram",
             "com.google.android.youtube" to "YouTube",
-            "com.twitter.android" to "Twitter"
+            "com.twitter.android"      to "Twitter"
         )
         for ((pkg, name) in budgetApps) {
             if (FocusModeManager.isBudgetExceeded(pkg)) {
+                val used = FocusModeManager.getAppUsageTodayMinutes(pkg)
                 AppLogger.w("FocusMode", "⚠️ Budget exceeded for $name")
-                pushAlert(name, FocusModeManager.getAppUsageTodayMinutes(pkg))
+                pushAlert(name, used)
             }
         }
     }
@@ -208,7 +190,7 @@ class FocusModeService : Service() {
     }
 
     private fun buildNotification(mode: String): Notification {
-        val emoji = when(mode) { "study" -> "📚"; "work" -> "💼"; "sleep" -> "😴"; else -> "📵" }
+        val emoji = when (mode) { "study" -> "📚"; "work" -> "💼"; "sleep" -> "😴"; else -> "📵" }
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(android.R.drawable.ic_lock_idle_lock)
             .setContentTitle("$emoji Focus Mode: ${mode.uppercase()}")
