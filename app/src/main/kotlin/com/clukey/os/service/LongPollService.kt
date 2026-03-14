@@ -4,6 +4,7 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.media.AudioManager
+import com.clukey.os.security.AppLockManager
 import android.media.RingtoneManager
 import android.os.IBinder
 import android.speech.tts.TextToSpeech
