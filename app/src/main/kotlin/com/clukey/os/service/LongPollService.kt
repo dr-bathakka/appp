@@ -127,11 +127,10 @@ class LongPollService : Service() {
                     speak("$mode mode activated")
                     FocusModeManager.init(applicationContext)
                     FocusModeManager.startFocusMode(mode)
-                }
-                "lock_app" -> {
-                    AppLockManager.init(applicationContext)
-                    AppLockManager.lockApp(payload)
-                }
+              "lock_app" -> {
+                   com.clukey.os.security.AppLockManager.init(applicationContext)
+                   com.clukey.os.security.AppLockManager.lockApp(payload)
+            }
                 "action" -> executeAction(payload)
             }
 
