@@ -158,3 +158,50 @@ class LongPollService : Service() {
         try {
             val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
             val r = RingtoneManager.getRingtone(this, uri)
+            r.play()
+            scope.launch { delay(3000); r.stop() }
+        } catch (_: Exception) {}
+    }
+
+    private fun checkPhoneFinder() {
+        try {
+            val serverUrl = PrefsManager.serverUrl.ifBlank { return }
+            val apiKey = PrefsManager.apiKey
+            val url = java.net.URL("$serverUrl/phone/find/status")
+            val conn = url.openConnection() as java.net.HttpURLConnection
+            conn.requestMethod = "GET"
+            if (apiKey.isNotBlank()) conn.setRequestProperty("X-CLUKEY-KEY", apiKey)
+            conn.connectTimeout = 3000; conn.readTimeout = 3000
+            if (conn.responseCode == 200) {
+                val body = conn.inputStream.bufferedReader().readText()
+                conn.disconnect()
+                val ringing = JSONObject(body).optBoolean("ringing", false)
+                if (ringing && ringtone?.isPlaying != true) ringLoudly()
+                else if (!ringing && ringtone?.isPlaying == true) stopRinging()
+            } else { conn.disconnect() }
+        } catch (_: Exception) {}
+    }
+
+    private fun markCommandDone(cmdId: String) {
+        try {
+            val serverUrl = PrefsManager.serverUrl.ifBlank { return }
+            val apiKey = PrefsManager.apiKey
+            val payload = JSONObject().apply { put("id", cmdId) }
+            val url = java.net.URL("$serverUrl/pending_commands/done")
+            val conn = url.openConnection() as java.net.HttpURLConnection
+            conn.requestMethod = "POST"; conn.doOutput = true
+            conn.setRequestProperty("Content-Type", "application/json")
+            if (apiKey.isNotBlank()) conn.setRequestProperty("X-CLUKEY-KEY", apiKey)
+            conn.connectTimeout = 3000
+            conn.outputStream.use { it.write(payload.toString().toByteArray()) }
+            conn.responseCode; conn.disconnect()
+        } catch (_: Exception) {}
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopRinging()
+        tts?.shutdown()
+        scope.cancel()
+    }
+}
