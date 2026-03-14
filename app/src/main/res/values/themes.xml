@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Main app theme - MaterialComponents based -->
+    <style name="Theme.CluKeyOS" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/neon_cyan</item>
+        <item name="colorPrimaryVariant">@color/bg_panel</item>
+        <item name="colorOnPrimary">@color/bg_dark</item>
+        <item name="colorSecondary">@color/neon_blue</item>
+        <item name="colorOnSecondary">@color/bg_dark</item>
+        <item name="android:colorBackground">@color/bg_dark</item>
+        <item name="colorSurface">@color/bg_panel</item>
+        <item name="colorOnSurface">@color/text_main</item>
+        <item name="android:windowBackground">@color/bg_dark</item>
+        <item name="android:statusBarColor">@color/bg_deep</item>
+        <item name="android:navigationBarColor">@color/bg_deep</item>
+    </style>
+
+    <!-- Alias so both names work -->
+    <style name="Theme.CluKey" parent="Theme.CluKeyOS" />
+</resources>

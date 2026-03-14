@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CluKey</string>
+    <string name="notif_assistant_title">CluKey Assistant Running</string>
+    <string name="notif_assistant_text">AI brain connected</string>
+    <string name="accessibility_description">CluKey uses accessibility to detect foreground apps for app locking and visual control.</string>
+</resources>

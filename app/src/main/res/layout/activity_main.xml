@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#020408"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <!-- HEADER -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#060D18"
+            android:padding="12dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="⬡ CLUKEY OS"
+                android:textColor="#00E5FF"
+                android:textSize="20sp"
+                android:fontFamily="monospace"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tvServerTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--:--"
+                android:textColor="#7F9FAD"
+                android:textSize="14sp"
+                android:fontFamily="monospace"
+                android:layout_marginEnd="12dp"/>
+
+            <ImageButton
+                android:id="@+id/btnSettings"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_settings"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Settings"/>
+
+            <ImageButton
+                android:id="@+id/btnLogs"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_logs"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Logs"/>
+        </LinearLayout>
+
+        <!-- NOTIFICATION ACCESS BANNER -->
+        <LinearLayout
+            android:id="@+id/bannerNotifAccess"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#1A2E1A"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="⚠  Enable Notification Access to sync WhatsApp/SMS to your laptop"
+                android:textColor="#00FF88"
+                android:textSize="12sp"
+                android:fontFamily="monospace"/>
+
+            <Button
+                android:id="@+id/btnEnableNotif"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:text="ENABLE"
+                android:textColor="#020408"
+                android:backgroundTint="#00FF88"
+                android:textSize="11sp"
+                android:fontFamily="monospace"/>
+        </LinearLayout>
+
+        <!-- STATUS ROW -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="#060D18"
+                android:padding="10dp"
+                android:layout_marginEnd="4dp">
+
+                <TextView
+                    android:id="@+id/tvServerStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="○ CONNECTING"
+                    android:textColor="#7F9FAD"
+                    android:textSize="12sp"
+                    android:fontFamily="monospace"/>
+
+                <TextView
+                    android:id="@+id/tvMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MODE: NORMAL"
+                    android:textColor="#00E5FF"
+                    android:textSize="11sp"
+                    android:fontFamily="monospace"/>
+
+                <TextView
+                    android:id="@+id/tvAiProvider"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AI: GROQ"
+                    android:textColor="#7F9FAD"
+                    android:textSize="11sp"
+                    android:fontFamily="monospace"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="#060D18"
+                android:padding="10dp"
+                android:layout_marginStart="4dp">
+
+                <TextView
+                    android:id="@+id/tvPcStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="○ PC OFFLINE"
+                    android:textColor="#7F9FAD"
+                    android:textSize="12sp"
+                    android:fontFamily="monospace"/>
+
+                <TextView
+                    android:id="@+id/tvMsgSyncStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="○ ENABLE MSG SYNC"
+                    android:textColor="#8B2BE2"
+                    android:textSize="11sp"
+                    android:fontFamily="monospace"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MSGS: "
+                        android:textColor="#7F9FAD"
+                        android:textSize="11sp"
+                        android:fontFamily="monospace"/>
+
+                    <TextView
+                        android:id="@+id/tvUnreadBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="#020408"
+                        android:background="#00E5FF"
+                        android:paddingStart="6dp"
+                        android:paddingEnd="6dp"
+                        android:textSize="11sp"
+                        android:fontFamily="monospace"
+                        android:visibility="gone"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- CONVERSATION AREA -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[ AI CHAT ]"
+            android:textColor="#00E5FF"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:layout_marginBottom="4dp"/>
+
+        <ScrollView
+            android:id="@+id/scrollConversation"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:background="#060D18"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/tvConversation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CluKey OS ready. Say 'Hey CluKey' or type a command below."
+                android:textColor="#A8C4D8"
+                android:textSize="13sp"
+                android:fontFamily="monospace"
+                android:padding="10dp"
+                android:lineSpacingMultiplier="1.3"/>
+        </ScrollView>
+
+        <!-- AI STATE -->
+        <TextView
+            android:id="@+id/tvAiState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="READY"
+            android:textColor="#00FF88"
+            android:textSize="11sp"
+            android:fontFamily="monospace"
+            android:layout_marginBottom="6dp"/>
+
+        <!-- INPUT ROW -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+            <EditText
+                android:id="@+id/inputCommand"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_input"
+                android:hint="Type command or ask anything..."
+                android:textColorHint="#3A5A6A"
+                android:textColor="#A8C4D8"
+                android:textSize="14sp"
+                android:fontFamily="monospace"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:inputType="text"
+                android:imeOptions="actionSend"
+                android:layout_marginEnd="8dp"/>
+
+            <ImageButton
+                android:id="@+id/btnVoice"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="#00E5FF"
+                android:src="@android:drawable/ic_btn_speak_now"
+                android:contentDescription="Voice"
+                android:layout_marginEnd="6dp"/>
+
+            <Button
+                android:id="@+id/btnSend"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:text="SEND"
+                android:textColor="#020408"
+                android:backgroundTint="#00E5FF"
+                android:fontFamily="monospace"
+                android:textSize="13sp"/>
+        </LinearLayout>
+
+        <!-- PHONE CONTROL -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[ PHONE CONTROL ]"
+            android:textColor="#00E5FF"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:layout_marginBottom="6dp"/>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+            android:rowCount="2"
+            android:layout_marginBottom="12dp">
+
+            <Button android:id="@+id/btnLockPhone"
+                android:layout_width="0dp" android:layout_height="40dp"
+                android:layout_columnWeight="1" android:layout_margin="3dp"
+                android:text="LOCK" android:textColor="#020408"
+                android:backgroundTint="#00E5FF" android:fontFamily="monospace" android:textSize="12sp"/>
+
+            <Button android:id="@+id/btnWifi"
+                android:layout_width="0dp" android:layout_height="40dp"
+                android:layout_columnWeight="1" android:layout_margin="3dp"
+                android:text="WIFI" android:textColor="#020408"
+                android:backgroundTint="#00E5FF" android:fontFamily="monospace" android:textSize="12sp"/>
+
+            <Button android:id="@+id/btnBluetooth"
+                android:layout_width="0dp" android:layout_height="40dp"
+                android:layout_columnWeight="1" android:layout_margin="3dp"
+                android:text="BT" android:textColor="#020408"
+                android:backgroundTint="#8B2BE2" android:fontFamily="monospace" android:textSize="12sp"/>
+
+            <Button android:id="@+id/btnScreenshot"
+                android:layout_width="0dp" android:layout_height="40dp"
+                android:layout_columnWeight="1" android:layout_margin="3dp"
+                android:text="SHOT" android:textColor="#020408"
+                android:backgroundTint="#00FF88" android:fontFamily="monospace" android:textSize="12sp"/>
+
+            <Button android:id="@+id/btnSilent"
+                android:layout_width="0dp" android:layout_height="40dp"
+                android:layout_columnWeight="1" android:layout_margin="3dp"
+                android:text="SILENT" android:textColor="#020408"
+                android:backgroundTint="#7F9FAD" android:fontFamily="monospace" android:textSize="12sp"/>
+
+            <Button
+                android:layout_width="0dp" android:layout_height="40dp"
+                android:layout_columnWeight="1" android:layout_margin="3dp"
+                android:text="HOTSPOT" android:textColor="#020408"
+                android:backgroundTint="#D4A017" android:fontFamily="monospace" android:textSize="11sp"
+                android:onClick="onHotspot"/>
+        </GridLayout>
+
+        <!-- PC CONTROL -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[ PC CONTROL ]"
+            android:textColor="#00E5FF"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:layout_marginBottom="6dp"/>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+            android:layout_marginBottom="12dp">
+
+            <Button android:id="@+id/btnPcLock"
+                android:layout_width="0dp" android:layout_height="40dp"
+                android:layout_columnWeight="1" android:layout_margin="3dp"
+                android:text="LOCK PC" android:textColor="#020408"
+                android:backgroundTint="#00E5FF" android:fontFamily="monospace" android:textSize="11sp"/>
+
+            <Button android:id="@+id/btnPcScreenshot"
+                android:layout_width="0dp" android:layout_height="40dp"
+                android:layout_columnWeight="1" android:layout_margin="3dp"
+                android:text="PC SHOT" android:textColor="#020408"
+                android:backgroundTint="#00FF88" android:fontFamily="monospace" android:textSize="11sp"/>
+
+            <Button android:id="@+id/btnPcClipboard"
+                android:layout_width="0dp" android:layout_height="40dp"
+                android:layout_columnWeight="1" android:layout_margin="3dp"
+                android:text="CLIPBOARD" android:textColor="#020408"
+                android:backgroundTint="#8B2BE2" android:fontFamily="monospace" android:textSize="10sp"/>
+        </GridLayout>
+
+        <!-- FILE TRANSFER -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[ FILE TRANSFER ]"
+            android:textColor="#00E5FF"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:layout_marginBottom="6dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+            <Button android:id="@+id/btnShareFile"
+                android:layout_width="0dp" android:layout_height="44dp"
+                android:layout_weight="1" android:layout_marginEnd="6dp"
+                android:text="📤 SEND FILE TO PC"
+                android:textColor="#020408" android:backgroundTint="#00FF88"
+                android:fontFamily="monospace" android:textSize="12sp"/>
+
+            <Button android:id="@+id/btnSyncFiles"
+                android:layout_width="0dp" android:layout_height="44dp"
+                android:layout_weight="1"
+                android:text="📥 LIST FILES"
+                android:textColor="#020408" android:backgroundTint="#00E5FF"
+                android:fontFamily="monospace" android:textSize="12sp"/>
+        </LinearLayout>
+
+        <!-- BOTTOM STATUS BAR -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#060D18"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="UPTIME:"
+                android:textColor="#3A5A6A"
+                android:textSize="11sp"
+                android:fontFamily="monospace"/>
+
+            <TextView
+                android:id="@+id/tvUptime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00:00"
+                android:textColor="#7F9FAD"
+                android:textSize="11sp"
+                android:fontFamily="monospace"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:textSize="11sp"/>
+
+            <TextView
+                android:id="@+id/tvMemTurns"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 turns"
+                android:textColor="#7F9FAD"
+                android:textSize="11sp"
+                android:fontFamily="monospace"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

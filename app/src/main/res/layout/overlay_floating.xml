@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <!-- Collapsed orb -->
+    <LinearLayout
+        android:id="@+id/orbCollapsed"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="#CC0D1117"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⬡"
+            android:textSize="28sp"
+            android:textColor="#FF4FC3F7" />
+    </LinearLayout>
+
+    <!-- Expanded panel -->
+    <LinearLayout
+        android:id="@+id/panelExpanded"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:background="#EE0A0E1A"
+        android:orientation="vertical"
+        android:padding="14dp"
+        android:visibility="gone">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⬡ CluKey"
+                android:textSize="14sp"
+                android:textColor="#FF4FC3F7"
+                android:textStyle="bold"
+                android:layout_weight="1" />
+            <TextView
+                android:id="@+id/btnClosePanel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✕"
+                android:textSize="16sp"
+                android:textColor="#FF64748B"
+                android:padding="4dp" />
+        </LinearLayout>
+
+        <!-- Response area -->
+        <TextView
+            android:id="@+id/txtOverlayResponse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="How can I help?"
+            android:textSize="13sp"
+            android:textColor="#FFE2E8F0"
+            android:background="#FF111827"
+            android:padding="10dp"
+            android:minLines="2"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Input row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/inputOverlay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Ask anything..."
+                android:textSize="12sp"
+                android:textColor="#FFE2E8F0"
+                android:textColorHint="#FF475569"
+                android:background="#FF1E293B"
+                android:padding="8dp"
+                android:imeOptions="actionSend"
+                android:inputType="text" />
+            <TextView
+                android:id="@+id/btnOverlaySend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="→"
+                android:textSize="18sp"
+                android:textColor="#FF4FC3F7"
+                android:padding="8dp"
+                android:gravity="center"
+                android:background="#FF1E3A5F" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>
