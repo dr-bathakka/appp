@@ -102,8 +102,8 @@ class LongPollService : Service() {
                     FocusModeManager.startFocusMode(mode)
                 }
                 "lock_app"     -> {
-                    AppLockManager.init(applicationContext)
-                    AppLockManager.lockApp(payload)
+                    com.clukey.os.security.AppLockManager.init(applicationContext)
+                    com.clukey.os.security.AppLockManager.lockApp(payload)
                 }
                 "action"       -> executeAction(payload)
             }
