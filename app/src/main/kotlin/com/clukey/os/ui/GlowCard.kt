@@ -6,7 +6,6 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
-import com.clukey.os.R
 
 /**
  * GlowCard — FrameLayout with neon glow border for the Jarvis HUD look.

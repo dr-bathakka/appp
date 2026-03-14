@@ -18,7 +18,9 @@ android {
     // Only compile kotlin/ folder — exclude the old java/ folder
     sourceSets {
         getByName("main") {
-            java.srcDirs("src/main/kotlin")
+            // Only compile kotlin/ - excludes any legacy java/ folder
+            java.setSrcDirs(listOf("src/main/kotlin"))
+            kotlin.setSrcDirs(listOf("src/main/kotlin"))
         }
     }
 
