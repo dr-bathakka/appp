@@ -7,11 +7,8 @@ import android.view.accessibility.AccessibilityEvent
 import com.clukey.os.security.AppLockManager
 import com.clukey.os.ui.AppLockActivity
 import com.clukey.os.utils.AppLogger
+import com.clukey.os.utils.PrefsManager
 
-/**
- * AppLockService — Accessibility service that monitors foreground app.
- * When a locked app is detected, launches AppLockActivity over it.
- */
 class AppLockService : AccessibilityService() {
 
     companion object {
@@ -23,12 +20,16 @@ class AppLockService : AccessibilityService() {
 
     override fun onServiceConnected() {
         super.onServiceConnected()
+        // Safety: init PrefsManager in case Application.onCreate() hasn't run yet
+        try { PrefsManager.init(applicationContext) } catch (_: Exception) {}
+        try { AppLogger.init(applicationContext) } catch (_: Exception) {}
+        try { AppLockManager.init(applicationContext) } catch (_: Exception) {}
+
         instance = this
-        serviceInfo = serviceInfo.apply {
+
+        serviceInfo = serviceInfo?.apply {
             eventTypes = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
             feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC
-            flags = AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS or
-                    AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
             notificationTimeout = 100
         }
         AppLogger.i(TAG, "AppLockService connected")
@@ -36,37 +37,34 @@ class AppLockService : AccessibilityService() {
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         event ?: return
-        if (event.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) return
+        try {
+            if (event.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) return
+            val pkg = event.packageName?.toString() ?: return
+            if (pkg == "com.clukey.os" || pkg == packageName) return
+            if (pkg == lastPackage) return
+            lastPackage = pkg
 
-        val pkg = event.packageName?.toString() ?: return
-        if (pkg == "com.clukey.os" || pkg == packageName) return
-        if (pkg == lastPackage) return
-        lastPackage = pkg
+            if (!AppLockManager.masterLockEnabled) return
+            if (!AppLockManager.isAppLocked(pkg)) return
+            if (AppLockManager.isSessionUnlocked(pkg)) return
 
-        if (!AppLockManager.masterLockEnabled) return
-        if (!AppLockManager.isAppLocked(pkg)) return
-        if (AppLockManager.isSessionUnlocked(pkg)) return
+            val appName = try {
+                packageManager.getApplicationLabel(packageManager.getApplicationInfo(pkg, 0)).toString()
+            } catch (_: Exception) { pkg }
 
-        val appName = try {
-            packageManager.getApplicationLabel(packageManager.getApplicationInfo(pkg, 0)).toString()
-        } catch (_: Exception) { pkg }
-
-        AppLogger.i(TAG, "Locked app detected: $appName ($pkg)")
-        val intent = Intent(this, AppLockActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            putExtra(AppLockActivity.EXTRA_PACKAGE, pkg)
-            putExtra(AppLockActivity.EXTRA_APP_NAME, appName)
-        }
-        startActivity(intent)
+            val intent = Intent(this, AppLockActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                putExtra(AppLockActivity.EXTRA_PACKAGE, pkg)
+                putExtra(AppLockActivity.EXTRA_APP_NAME, appName)
+            }
+            startActivity(intent)
+        } catch (_: Exception) {}
     }
 
-    override fun onInterrupt() {
-        AppLogger.w(TAG, "AppLockService interrupted")
-    }
+    override fun onInterrupt() {}
 
     override fun onDestroy() {
-        super.onDestroy()
         instance = null
-        AppLogger.i(TAG, "AppLockService destroyed")
+        super.onDestroy()
     }
 }

@@ -9,8 +9,12 @@ object PrefsManager {
     private lateinit var prefs: SharedPreferences
 
     fun init(context: Context) {
-        prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        if (!::prefs.isInitialized) {
+            prefs = context.applicationContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        }
     }
+
+    val isInitialized get() = ::prefs.isInitialized
 
     var serverUrl: String
         get() = prefs.getString("server_url", "http://10.0.2.2:5000") ?: "http://10.0.2.2:5000"

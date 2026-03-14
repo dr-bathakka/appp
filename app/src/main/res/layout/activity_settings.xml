@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- ── BRAIN CONNECTION ──────────────────────────────────────────── -->
+        <TextView android:text="BRAIN CONNECTION"
+            android:textColor="@color/neon_cyan" android:textSize="11sp"
+            android:fontFamily="monospace" android:paddingBottom="6dp"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+        <TextView android:text="Server URL" android:textColor="@color/text_dim"
+            android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <EditText android:id="@+id/etServerUrl"
+            android:layout_width="match_parent" android:layout_height="44dp"
+            android:background="@drawable/bg_input" android:textColor="@color/text_main"
+            android:fontFamily="monospace" android:textSize="13sp"
+            android:paddingHorizontal="12dp" android:singleLine="true"
+            android:inputType="textUri" android:layout_marginBottom="8dp"/>
+
+        <TextView android:text="API Key (X-CLUKEY-KEY)" android:textColor="@color/text_dim"
+            android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <EditText android:id="@+id/etApiKey"
+            android:layout_width="match_parent" android:layout_height="44dp"
+            android:background="@drawable/bg_input" android:textColor="@color/text_main"
+            android:fontFamily="monospace" android:textSize="13sp"
+            android:paddingHorizontal="12dp" android:singleLine="true"
+            android:inputType="textPassword" android:layout_marginBottom="8dp"/>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="16dp">
+            <Button android:id="@+id/btnTestConnection"
+                android:layout_width="0dp" android:layout_weight="1" android:layout_height="40dp"
+                android:text="TEST" android:textColor="@color/bg_dark"
+                android:backgroundTint="@color/neon_cyan" android:fontFamily="monospace"
+                android:layout_marginEnd="8dp"/>
+            <Button android:id="@+id/btnRegisterDevice"
+                android:layout_width="0dp" android:layout_weight="1" android:layout_height="40dp"
+                android:text="REGISTER" android:textColor="@color/bg_dark"
+                android:backgroundTint="@color/neon_blue" android:fontFamily="monospace"/>
+        </LinearLayout>
+
+        <TextView android:id="@+id/txtConnectionResult"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:textColor="@color/neon_green" android:fontFamily="monospace"
+            android:textSize="12sp" android:layout_marginBottom="16dp"/>
+
+        <!-- ── VOICE ─────────────────────────────────────────────────────── -->
+        <TextView android:text="VOICE ASSISTANT"
+            android:textColor="@color/neon_cyan" android:textSize="11sp"
+            android:fontFamily="monospace" android:paddingBottom="6dp"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+        <TextView android:text="Wake Word" android:textColor="@color/text_dim"
+            android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <EditText android:id="@+id/etWakeWord"
+            android:layout_width="match_parent" android:layout_height="44dp"
+            android:background="@drawable/bg_input" android:textColor="@color/text_main"
+            android:fontFamily="monospace" android:textSize="13sp"
+            android:paddingHorizontal="12dp" android:singleLine="true"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="48dp"
+            android:orientation="horizontal" android:gravity="center_vertical">
+            <TextView android:text="Wake Word Enabled" android:textColor="@color/text_main"
+                android:textSize="13sp" android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+            <Switch android:id="@+id/swWakeWord" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:thumbTint="@color/neon_cyan"
+                android:trackTint="@color/bg_panel"/>
+        </LinearLayout>
+
+        <!-- ── HTTP SERVER ───────────────────────────────────────────────── -->
+        <TextView android:text="HTTP BRIDGE SERVER"
+            android:textColor="@color/neon_cyan" android:textSize="11sp"
+            android:fontFamily="monospace" android:paddingBottom="6dp"
+            android:paddingTop="12dp"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+        <TextView android:text="Port (default 8080)" android:textColor="@color/text_dim"
+            android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <EditText android:id="@+id/etHttpPort"
+            android:layout_width="match_parent" android:layout_height="44dp"
+            android:background="@drawable/bg_input" android:textColor="@color/text_main"
+            android:fontFamily="monospace" android:textSize="13sp"
+            android:paddingHorizontal="12dp" android:singleLine="true"
+            android:inputType="number" android:layout_marginBottom="8dp"/>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="48dp"
+            android:orientation="horizontal" android:gravity="center_vertical">
+            <TextView android:text="HTTP Server Enabled" android:textColor="@color/text_main"
+                android:textSize="13sp" android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+            <Switch android:id="@+id/swHttpServer" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:thumbTint="@color/neon_cyan"
+                android:trackTint="@color/bg_panel"/>
+        </LinearLayout>
+
+        <!-- ── FEATURES ──────────────────────────────────────────────────── -->
+        <TextView android:text="FEATURES"
+            android:textColor="@color/neon_cyan" android:textSize="11sp"
+            android:fontFamily="monospace" android:paddingBottom="6dp"
+            android:paddingTop="12dp"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="48dp"
+            android:orientation="horizontal" android:gravity="center_vertical">
+            <TextView android:text="Floating Overlay" android:textColor="@color/text_main"
+                android:textSize="13sp" android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+            <Switch android:id="@+id/swOverlay" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:thumbTint="@color/neon_cyan"
+                android:trackTint="@color/bg_panel"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="48dp"
+            android:orientation="horizontal" android:gravity="center_vertical">
+            <TextView android:text="Notification Reading" android:textColor="@color/text_main"
+                android:textSize="13sp" android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+            <Switch android:id="@+id/swNotifRead" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:thumbTint="@color/neon_cyan"
+                android:trackTint="@color/bg_panel"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="48dp"
+            android:orientation="horizontal" android:gravity="center_vertical">
+            <TextView android:text="Auto-Start on Boot" android:textColor="@color/text_main"
+                android:textSize="13sp" android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+            <Switch android:id="@+id/swAutoStart" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:thumbTint="@color/neon_cyan"
+                android:trackTint="@color/bg_panel"/>
+        </LinearLayout>
+
+        <Button android:id="@+id/btnSaveSettings"
+            android:layout_width="match_parent" android:layout_height="48dp"
+            android:text="SAVE SETTINGS"
+            android:textColor="@color/bg_dark"
+            android:backgroundTint="@color/neon_cyan"
+            android:fontFamily="monospace"
+            android:layout_marginTop="24dp"/>
+
+    </LinearLayout>
+</ScrollView>

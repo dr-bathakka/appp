@@ -37,12 +37,6 @@ android {
     buildFeatures {
         buildConfig = true
     }
-
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
 
 dependencies {
@@ -55,15 +49,13 @@ dependencies {
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
-    // HTTP client
+    // HTTP
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
-
-    // NanoHTTPD — local HTTP server for phone bridge
     implementation("org.nanohttpd:nanohttpd:2.3.1")
-
-    // Location (Google Play Services)
-    implementation("com.google.android.gms:play-services-location:21.0.1")
 
     // JSON
     implementation("com.google.code.gson:gson:2.10.1")
+
+    // Notifications
+    implementation("androidx.core:core-ktx:1.12.0")
 }

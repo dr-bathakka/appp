@@ -44,7 +44,7 @@
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:allowBackup="true"
-        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+        android:theme="@style/Theme.CluKey"
         android:usesCleartextTraffic="true">
 
         <!-- Main Activity -->
@@ -61,7 +61,25 @@
         <activity
             android:name=".ui.AppLockActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/Theme.CluKey" />
+
+        <!-- Share Activity (phone ↔ PC ↔ server) -->
+        <activity
+            android:name=".ui.ShareActivity"
+            android:exported="true"
+            android:theme="@style/Theme.CluKey">
+            <!-- Handle "Share" from any app -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+        </activity>
 
         <!-- Core Services -->
         <service
@@ -157,10 +175,15 @@
             android:name=".service.FocusModeService"
             android:exported="false" />
 
-        <!-- App Lock -->
+        <!-- App Lock Accessibility Service -->
         <service
             android:name=".service.AppLockService"
-            android:exported="false" />
+            android:exported="true"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+        </service>
 
         <!-- Driving Mode -->
         <service

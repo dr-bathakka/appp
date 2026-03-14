@@ -13,7 +13,6 @@ import kotlinx.coroutines.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.Locale
-import com.clukey.os.security.AppLockManager
 
 /**
  * LongPollService — SOLVES the external phone lock notification problem!
