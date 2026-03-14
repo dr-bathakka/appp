@@ -28,18 +28,13 @@ jobs:
         with:
           gradle-version: '8.2'
 
-      - name: Create debug keystore
+      - name: Remove legacy java source folder
         run: |
-          keytool -genkey -v \
-            -keystore debug.keystore \
-            -alias androiddebugkey \
-            -keyalg RSA \
-            -keysize 2048 \
-            -validity 10000 \
-            -storepass android \
-            -keypass android \
-            -dname "CN=Android Debug,O=Android,C=US"
-          cp debug.keystore app/debug.keystore
+          rm -rf app/src/main/java
+          echo "Removed legacy java/ folder"
+
+      - name: Grant execute permission to gradlew
+        run: chmod +x gradlew
 
       - name: Build Debug APK
         run: gradle assembleDebug --stacktrace --no-daemon
@@ -48,19 +43,12 @@ jobs:
           JAVA_OPTS: "-Xmx4096m -Xms512m"
           ANDROID_HOME: /usr/local/lib/android/sdk
 
-      - name: Sign APK
-        run: |
-          ${ANDROID_HOME}/build-tools/34.0.0/apksigner sign \
-            --ks debug.keystore \
-            --ks-key-alias androiddebugkey \
-            --ks-pass pass:android \
-            --key-pass pass:android \
-            --out app-signed.apk \
-            app/build/outputs/apk/debug/app-debug.apk
-
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: CluKey-debug-APK
-          path: app-signed.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
           retention-days: 30
+
+      - name: Show APK size
+        run: ls -lh app/build/outputs/apk/debug/app-debug.apk
